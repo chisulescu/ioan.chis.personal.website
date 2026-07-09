@@ -118,6 +118,33 @@
             animation: blink 1s step-start infinite;
         }
         @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- GOOGLE TRANSLATE STEALTH CSS --- */
+        /* Ascunde widget-ul standard */
+        #google_translate_element {
+            display: none !important;
+        }
+        /* Ascunde bara de sus care apare uneori */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-banner-frame {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        /* Previne ca Google să împingă body-ul în jos */
+        body {
+            top: 0px !important;
+            position: relative !important;
+        }
+        /* Ascunde tooltip-urile (pop-up-urile) care apar la hover peste textul tradus */
+        #goog-gt-tt, 
+        .goog-tooltip,
+        .goog-tooltip:hover,
+        .goog-text-highlight {
+            display: none !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+            border: none !important;
+        }
     </style>
 </head>
 
@@ -125,15 +152,17 @@
     
     <div class="cursor-dot hidden md:block"></div>
 
+    <!-- Div invizibil necesar pentru inițializarea Google Translate -->
+    <div id="google_translate_element"></div>
+
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-lightBg/80 dark:bg-darkBg/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-500">
         <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="font-serif text-lg md:text-xl tracking-tight font-medium hover:opacity-70 transition-opacity">
+            <a href="#about" class="font-serif text-lg md:text-xl tracking-tight font-medium hover:opacity-70 transition-opacity">
                 I.C.
             </a>
             <div class="flex items-center gap-6 font-sans text-sm font-light">
-                <a href="#home" class="nav-link hover-underline hidden sm:inline-block" data-target="home">Home</a>
-                <a href="#experience" class="nav-link hover-underline" data-target="experience">Experience</a>
+                <a href="#about" class="nav-link hover-underline hidden sm:inline-block" data-target="about">About</a>
                 <a href="#insights" class="nav-link hover-underline" data-target="insights">Insights</a>
                 
                 <!-- Theme Toggle Button -->
@@ -154,15 +183,17 @@
     <!-- Main Content Container (SPA Root) -->
     <main class="flex-grow max-w-4xl mx-auto w-full px-6 pt-32 pb-20">
         
-        <!-- VIEW: HOME -->
-        <section id="view-home" class="view-section active">
+        <!-- VIEW: ABOUT -->
+        <section id="view-about" class="view-section active">
             <header class="mb-16 reveal active">
-                <div class="font-mono text-xs md:text-sm text-accent mb-6 flex items-center gap-2">
+                <!-- Adăugat clasa 'notranslate' pentru a preveni traducerea comenzii tehnice -->
+                <div class="font-mono text-xs md:text-sm text-accent mb-6 flex items-center gap-2 notranslate">
                     <span class="text-green-500">➜</span> 
                     <span class="text-blue-500">~</span> 
                     <span id="typing-text" class="typing-cursor"></span>
                 </div>
-                <h1 class="font-serif text-4xl md:text-5xl font-normal tracking-tight mb-4">
+                <!-- Adăugat clasa 'notranslate' pentru nume/brand -->
+                <h1 class="font-serif text-4xl md:text-5xl font-normal tracking-tight mb-4 notranslate">
                     Ioan Chiș
                 </h1>
                 <p class="font-sans text-accent text-lg md:text-xl font-light tracking-wide max-w-2xl">
@@ -172,141 +203,30 @@
 
             <div class="font-sans font-light text-base md:text-lg leading-relaxed space-y-6 text-lightText/90 dark:text-darkText/90 max-w-3xl reveal active" style="transition-delay: 100ms;">
                 <p>
-                    I drive innovation through AI, software engineering, and strategic delivery, turning complex ideas into impactful, resilient systems. With extensive experience in cloud infrastructure, DevOps, and project management, I bridge the gap between strategic vision and technical execution.
+                    My journey didn't begin in a server room, but in the heart of the Carpathian Mountains. Born and raised surrounded by nature, my childhood summers were spent in Maramureș, along the Iza Valley. There, amidst the rhythm of making hay and the shared warmth of meals cooked outdoors in a traditional cauldron (<em>ceaun</em>), I learned my earliest lessons about resilience, hard work, and the intricate balance of natural ecosystems.
                 </p>
                 <p>
-                    My background spans managing cross-functional teams for FinTech platforms, orchestrating cloud operations, and maintaining an academic foundation teaching Intelligent Systems at the Technical University of Cluj-Napoca.
+                    Those formative years instilled in me a deep appreciation for systems that endure. Today, I channel that same dedication into the digital world. My fascination with technology is rooted in those same principles: building scalable, resilient structures that serve a meaningful purpose and stand the test of time.
+                </p>
+                <p>
+                    As an Engineering Manager and AI enthusiast, I bridge the gap between strategic vision and technical execution. My professional narrative spans from orchestrating robust cloud infrastructures and guiding cross-functional teams in the FinTech sector, to nurturing the next generation of minds teaching Intelligent Systems at the Technical University of Cluj-Napoca. Most recently, I drive strategic tech initiatives and R&D for global enterprises.
+                </p>
+                <p>
+                    I believe that whether you are cultivating a field or architecting a distributed enterprise platform, the core requirement remains the same: a profound respect for the process, the people, and the value delivered. I bring this blend of authentic grounding and cutting-edge technical leadership to every organization I partner with.
                 </p>
             </div>
 
             <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 reveal active" style="transition-delay: 200ms;">
                 <div class="border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
                     <h3 class="font-medium text-lg mb-2">Technical Leadership</h3>
-                    <p class="text-sm text-accent font-light">Leading the Acceleration Roadmap Lab at GlobalLogic, focusing on strategic tech initiatives and R&D.</p>
-                    <a href="#experience" class="inline-block mt-4 text-sm font-medium hover-underline">View Experience ↗</a>
+                    <p class="text-sm text-accent font-light">Driving strategic tech initiatives, R&D, and managing complex engineering lifecycles at scale.</p>
+                    <a href="https://www.linkedin.com/in/ioan-chis/" target="_blank" class="inline-block mt-4 text-sm font-medium hover-underline">View LinkedIn Profile ↗</a>
                 </div>
                 <div class="border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
                     <h3 class="font-medium text-lg mb-2">Insights & Writing</h3>
                     <p class="text-sm text-accent font-light">Thoughts on software architecture, DevOps culture, and managing engineering teams.</p>
                     <a href="#insights" class="inline-block mt-4 text-sm font-medium hover-underline">Read Articles ↗</a>
                 </div>
-            </div>
-        </section>
-
-        <!-- VIEW: EXPERIENCE -->
-        <section id="view-experience" class="view-section">
-            <h2 class="font-serif text-3xl mb-12 border-b border-gray-200 dark:border-gray-800 pb-4">Experience & Education</h2>
-            
-            <div class="space-y-10 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 dark:before:via-gray-800 before:to-transparent">
-                
-                <!-- Role 1 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active reveal">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-black dark:bg-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-black/20 backdrop-blur-sm">
-                        <div class="flex flex-col mb-3">
-                            <span class="font-mono text-xs text-accent">Aug 2025 — Present</span>
-                            <h3 class="font-medium text-lg">Engineering Manager</h3>
-                            <span class="text-sm text-accent">GlobalLogic • Remote</span>
-                        </div>
-                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
-                            <li>Focus on driving business results, stakeholder management, and project outcomes.</li>
-                            <li>Resource planning, staffing, budget controlling, and risk management.</li>
-                            <li>Ensure high-quality code standards and guide developers on optimizing legacy systems.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Role 2 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
-                        <div class="flex flex-col mb-3">
-                            <span class="font-mono text-xs text-accent">Jan 2023 — Jul 2025</span>
-                            <h3 class="font-medium text-lg">Technical Project Manager</h3>
-                            <span class="text-sm text-accent">Insurance Supermarket International Canada</span>
-                        </div>
-                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
-                            <li>Coordinated DevOps & cloud infra projects using Terraform and automated deployment pipelines.</li>
-                            <li>Migrated monitoring to Datadog and CI/CD workflows to GitHub Actions.</li>
-                            <li>Managed day-to-day cloud operations (EC2, S3, Lambda, VPCs) and supported SOC/SOC2 implementation.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Role 3 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
-                        <div class="flex flex-col mb-3">
-                            <span class="font-mono text-xs text-accent">Feb 2020 — Feb 2025</span>
-                            <h3 class="font-medium text-lg">University Assistant</h3>
-                            <span class="text-sm text-accent">Universitatea Tehnică din Cluj-Napoca</span>
-                        </div>
-                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
-                            <li>Taught Intelligent Systems lab courses (Machine Learning, Bayesian Networks, Big Data).</li>
-                            <li>Mentored students on AI-driven software development projects and end-to-end ML workflows.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Role 4 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
-                        <div class="flex flex-col mb-3">
-                            <span class="font-mono text-xs text-accent">Aug 2020 — Dec 2022</span>
-                            <h3 class="font-medium text-lg">Senior Technical PM</h3>
-                            <span class="text-sm text-accent">Prodigy IT Solutions (QuantoPay)</span>
-                        </div>
-                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
-                            <li>Led development of the QuantoPay FinTech platform, coordinating a cross-functional team of 20+ engineers.</li>
-                            <li>Managed PCI-DSS compliance, client portal development, and agile project execution.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Role 5 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
-                        <div class="flex flex-col mb-2">
-                            <span class="font-mono text-xs text-accent">Sep 2019 — May 2020</span>
-                            <h3 class="font-medium text-lg">Project Manager & BA</h3>
-                            <span class="text-sm text-accent">AirportLabs</span>
-                        </div>
-                        <p class="text-sm font-light leading-relaxed text-lightText/80 dark:text-darkText/80">
-                            Managed software/hardware projects and delivered critical airport applications including FIDS and real-time aircraft visualization tools.
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Role 6 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
-                        <div class="flex flex-col mb-2">
-                            <span class="font-mono text-xs text-accent">Jul 2018 — Nov 2019</span>
-                            <h3 class="font-medium text-lg">Full Stack Engineer</h3>
-                            <span class="text-sm text-accent">GEBS / thullex</span>
-                        </div>
-                        <p class="text-sm font-light leading-relaxed text-lightText/80 dark:text-darkText/80">
-                            Developed microservices with Spring Boot, built user interfaces with ReactJS/Redux, and applied machine learning for image processing.
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Education -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal mt-4">
-                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-accent/30 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
-                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent">
-                        <div class="flex flex-col mb-1">
-                            <span class="font-mono text-xs text-accent">2015 — 2019</span>
-                            <h3 class="font-medium text-lg">BSc, Computer Science</h3>
-                            <span class="text-sm text-accent">Universitatea Tehnică din Cluj-Napoca</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
 
@@ -329,8 +249,6 @@
                         <div class="flex flex-row md:flex-col gap-4 md:gap-2 text-sm font-light">
                             <button onclick="setFilter('all', 'all')" class="filter-btn shrink-0 text-left active text-lightText dark:text-darkText font-medium transition-colors hover:text-lightText dark:hover:text-darkText" data-type="all" data-value="all">All Notes</button>
                             <button onclick="setFilter('tag', 'Technology')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Technology">Technology</button>
-                            <button onclick="setFilter('tag', 'Science')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Science">Science</button>
-                            <button onclick="setFilter('tag', 'Life')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Life">Life & Work</button>
                             <button onclick="setFilter('tag', 'Maramureș')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Maramureș">Maramureș</button>
                         </div>
                     </div>
@@ -339,8 +257,6 @@
                         <h3 class="font-serif text-lg mb-3 md:mb-4 text-lightText dark:text-darkText hidden md:block">Years</h3>
                         <div class="flex flex-row md:flex-col gap-4 md:gap-2 text-sm font-light">
                             <button onclick="setFilter('year', '2026')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="year" data-value="2026">2026</button>
-                            <button onclick="setFilter('year', '2025')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="year" data-value="2025">2025</button>
-                            <button onclick="setFilter('year', '2024')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="year" data-value="2024">2024</button>
                         </div>
                     </div>
                 </aside>
@@ -363,7 +279,7 @@
     <!-- Footer -->
     <footer class="mt-auto border-t border-gray-200 dark:border-gray-800 py-8 text-center text-sm font-light text-accent">
         <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; <span id="year"></span> Ioan Chiș. All rights reserved.</p>
+            <p>&copy; <span id="year"></span> <span class="notranslate">Ioan Chiș</span>. All rights reserved.</p>
             <div class="flex gap-6">
                 <a href="https://www.linkedin.com/in/ioan-chis" target="_blank" class="hover-underline">LinkedIn</a>
                 <a href="mailto:chisulescu@gmail.com" class="hover-underline">Email</a>
@@ -375,104 +291,163 @@
         // --- 1. MOCK BLOG DATA ---
         const articles = [
             {
-                id: 'ai-adoption-enterprise',
-                date: 'Oct 12, 2026',
+                id: 'transforming-saas-ai',
+                date: 'Oct 14, 2026',
                 year: '2026',
-                title: 'Pragmatic AI Adoption in Enterprise Ecosystems',
-                tags: ['Technology', 'AI / ML'],
-                readTime: '6 min',
-                excerpt: 'Moving beyond the hype: How engineering teams can integrate AI models into legacy SaaS platforms without breaking the architecture.',
-                content: `
-                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Pragmatic AI Adoption in Enterprise Ecosystems</h1>
-                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <span>October 12, 2026</span>
-                        <span>•</span>
-                        <span>6 min read</span>
-                    </div>
-                    <p class="mb-6">The transition from AI as an academic exercise to a core component of enterprise SaaS is fraught with architectural challenges. When leading teams through this modernization phase, the primary goal is rarely the model itself, but rather the pipeline.</p>
-                    <h3 class="text-xl font-medium mt-8 mb-4">The Integration Problem</h3>
-                    <p class="mb-6">Legacy systems weren't built for non-deterministic outputs. Integrating LLMs or predictive models requires robust fallback mechanisms, strict latency budgets, and rigorous API contracts.</p>
-                    <blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-6 text-accent">
-                        "The model is 5% of the work. The surrounding MLOps, telemetry, and fallback routing is the other 95%."
-                    </blockquote>
-                    <p class="mb-6">We've found that utilizing sidecar patterns for AI integrations allows us to scale the inference compute independently from the main application monolith, a crucial step in our modernization roadmap.</p>
-                `
-            },
-            {
-                id: 'maramures-roots',
-                date: 'Jul 04, 2026',
-                year: '2026',
-                title: 'Lessons on Resilience from the Wooden Churches of Maramureș',
-                tags: ['Maramureș', 'Life'],
-                readTime: '5 min',
-                excerpt: 'What ancient timber architecture can teach us about building systems that withstand the test of time, both in software and in life.',
-                content: `
-                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Lessons on Resilience from the Wooden Churches of Maramureș</h1>
-                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <span>July 4, 2026</span>
-                        <span>•</span>
-                        <span>5 min read</span>
-                    </div>
-                    <p class="mb-6">Growing up connected to Maramureș, you internalize a deep respect for longevity. The wooden churches here, some standing for centuries without a single iron nail, are masterclasses in decoupled architecture and resilience.</p>
-                    <p class="mb-6">In software, we talk endlessly about fault tolerance. But look at traditional woodwork: the joints are designed to move, breathe, and adapt to thermal expansion. They don't fight the environment; they are engineered to flex with it.</p>
-                `
-            },
-            {
-                id: 'fintech-devops',
-                date: 'Apr 22, 2025',
-                year: '2025',
-                title: 'Building Resilient FinTech Infrastructure',
-                tags: ['Technology', 'DevOps'],
+                title: 'Behind the Impact: Transforming a SaaS Company with AI and Modern Architecture',
+                tags: ['Technology'],
                 readTime: '8 min',
-                excerpt: 'Lessons learned from scaling platforms. Exploring infrastructure as code, zero-trust security, and CI/CD pipelines.',
+                excerpt: 'My experience leading the modernization of a legacy SaaS platform, breaking down monoliths, and embedding AI deeply into the core business logic.',
                 content: `
-                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Building Resilient FinTech Infrastructure</h1>
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4 text-lightText dark:text-darkText">Behind the Impact: Transforming a SaaS Company with AI and Modern Architecture</h1>
                     <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <span>April 22, 2025</span>
+                        <span>October 14, 2026</span>
                         <span>•</span>
                         <span>8 min read</span>
                     </div>
-                    <p class="mb-6">In FinTech, downtime isn't just an inconvenience; it's a breach of trust and potentially a regulatory incident. The emphasis must be heavily placed on "shift-left" security and immutable infrastructure.</p>
-                    <h3 class="text-xl font-medium mt-8 mb-4">Infrastructure as Code (IaC)</h3>
-                    <p class="mb-6">Treating our infrastructure setup as code allowed us to spin up isolated staging environments that perfectly mirrored production. This eliminated the classic "it works on my machine" syndrome.</p>
+                    <div class="space-y-6 text-lg text-lightText/90 dark:text-darkText/90">
+                        <p>When I stepped into my role as Engineering Manager, the challenge was clear but monumental: a highly successful, yet aging SaaS platform was hitting the limits of its monolithic architecture. The business needed to scale faster, deploy quicker, and, most importantly, leverage the explosive advancements in Artificial Intelligence.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">The Architectural Shift</h3>
+                        <p>We didn't just decide to "use microservices" because it was a buzzword. We needed resilience and isolated scalability. We began a careful, strangler-fig pattern approach to decouple the massive legacy codebase into domain-driven microservices. This allowed our cross-functional teams to own their entire lifecycle—from design to deployment.</p>
+                        <p>The cultural shift was just as significant as the technical one. Moving a team from a monolithic mindset, where deployments are rare and scary events, to a CI/CD-driven culture requires immense trust, transparent communication, and rigorous automated testing.</p>
+
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">Embedding AI Core Deep</h3>
+                        <p>The second phase of our transformation involved AI. Rather than slapping a generic chatbot on the UI and calling it a day, we looked at how AI could solve actual friction points for our users. We integrated Large Language Models (LLMs) to automate complex data entry and predictive models to forecast user churn.</p>
+                        <blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-6 text-accent">
+                            "True AI transformation isn't about adding features; it's about redefining the fundamental capabilities of your product's architecture."
+                        </blockquote>
+                        <p>Through strategic planning and a relentless focus on robust engineering practices, we didn't just modernize a platform; we future-proofed an entire business ecosystem. You can read more about this specific journey in my recent feature with <a href="https://www.globallogic.com/ro/behindtheimpact/ioan-chis-engineering-manager-transforming-saas-company-with-ai-and-modern-architecture/" target="_blank" class="text-blue-500 hover:underline">GlobalLogic's Behind the Impact series</a>.</p>
+                    </div>
                 `
             },
             {
-                id: 'complexity-science',
-                date: 'Nov 10, 2024',
-                year: '2024',
-                title: 'The Illusion of Control in Complex Systems',
-                tags: ['Science', 'Technology'],
+                id: 'the-power-of-sdd',
+                date: 'Aug 22, 2026',
+                year: '2026',
+                title: 'The Renaissance of SDD: Why Spec-Driven Development Changes the Paradigm',
+                tags: ['Technology'],
                 readTime: '7 min',
-                excerpt: 'Applying chaos theory and system dynamics to modern microservices architectures and team topologies.',
+                excerpt: 'Why writing code should be the last step. Exploring how Spec-Driven Development (SDD) shifts engineering from reactive coding to proactive, contract-first design.',
                 content: `
-                    <h1 class="font-serif text-3xl md:text-4xl mb-4">The Illusion of Control in Complex Systems</h1>
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4 text-lightText dark:text-darkText">The Renaissance of SDD: Why Spec-Driven Development Changes the Paradigm</h1>
                     <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <span>November 10, 2024</span>
+                        <span>August 22, 2026</span>
                         <span>•</span>
                         <span>7 min read</span>
                     </div>
-                    <p class="mb-6">As systems grow, they transition from complicated (like a watch) to complex (like an ecosystem). In complex systems, predictability drops exponentially as interdependencies grow.</p>
+                    <div class="space-y-6 text-lg text-lightText/90 dark:text-darkText/90">
+                        <p>For years, the Agile manifesto was misinterpreted by many as an excuse to jump straight into the IDE. "Working software over comprehensive documentation" morphed into "just start coding and we'll figure out the integrations later." In complex, enterprise-grade distributed systems, this approach is a guaranteed recipe for massive technical debt, broken integrations, and endless refactoring loops.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">Contract-First Engineering</h3>
+                        <p>I am a strong advocate for a rigorous adoption of Spec-Driven Development (SDD). SDD forces engineering teams to pause and define the exact specifications and contracts—like OpenAPI schemas, AsyncAPI definitions, or precise behavioral specs—before a single line of production code is written. The specification becomes the undeniable single source of truth.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">A Tool for Velocity, Not Bureaucracy</h3>
+                        <p>The true power of Spec-Driven Development lies in its ability to parallelize workflows and democratize architecture. Once the spec is agreed upon and mocked, frontend teams, backend teams, and QA can work simultaneously without blocking each other. It shifts the paradigm from "reactive bug-fixing during integration" to "proactive alignment."</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Eliminating Ambiguity:</strong> A well-written spec leaves no room for interpretation. It explicitly defines inputs, outputs, error states, and edge cases upfront.</li>
+                            <li><strong>Automated Testing & Confidence:</strong> Specs allow for immediate contract testing. You don't hope the API works; you mathematically prove the code adheres to the spec.</li>
+                        </ul>
+                        <p>Adopting SDD is a hallmark of engineering maturity. It requires discipline, clarity of thought, and a deep understanding of system boundaries. In my teams, writing the spec is not a bureaucratic hurdle; it is the very foundation of predictable, high-quality software delivery.</p>
+                    </div>
                 `
             },
             {
-                id: 'agile-engineering-managers',
-                date: 'Jan 15, 2024',
-                year: '2024',
-                title: 'Metrics That Actually Matter for Engineering Teams',
-                tags: ['Life', 'Management'],
-                readTime: '5 min',
-                excerpt: 'Why velocity is a flawed metric and what Engineering Managers should measure instead to ensure healthy, productive teams.',
+                id: 'ai-energy-arbitrage',
+                date: 'Jun 05, 2026',
+                year: '2026',
+                title: 'Sustainable Compute: AI-Driven Energy Arbitrage in Software Operations',
+                tags: ['Technology'],
+                readTime: '9 min',
+                excerpt: 'How we can use AI to schedule heavy compute tasks during periods of renewable energy surplus, saving costs and the environment.',
                 content: `
-                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Metrics That Actually Matter for Engineering Teams</h1>
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4 text-lightText dark:text-darkText">Sustainable Compute: AI-Driven Energy Arbitrage in Software Operations</h1>
                     <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <span>January 15, 2024</span>
+                        <span>June 5, 2026</span>
+                        <span>•</span>
+                        <span>9 min read</span>
+                    </div>
+                    <div class="space-y-6 text-lg text-lightText/90 dark:text-darkText/90">
+                        <p>As our reliance on AI and cloud computing grows, so does our energy footprint. Data centers now consume a massive percentage of global electricity. However, the nature of renewable energy (solar, wind) is highly volatile. There are periods of immense surplus where electricity prices drop to zero, or even go negative, and periods of scarcity where fossil fuels fill the gap.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">The Concept of Energy-Aware Scheduling</h3>
+                        <p>Not all software operations need to happen in real-time. Training ML models, processing massive batch data, generating monthly reports, or re-indexing large databases are all asynchronous tasks. What if our infrastructure was intelligent enough to schedule these tasks based on real-time energy grid data?</p>
+                        
+                        <p>We can build AI-driven orchestrators that monitor the spot price of electricity and the carbon intensity of the grid. When a sunny, windy day creates a massive surplus of green energy, the orchestrator aggressively spins up compute nodes to chew through backlogged processing tasks. When the grid is stressed and running on coal, it scales down to only essential, user-facing services.</p>
+                        
+                        <blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-6 text-accent">
+                            "By aligning our compute cycles with the Earth's natural energy cycles, we move from being consumers of the grid to active participants in grid stabilization."
+                        </blockquote>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">Economic and Ecological Synergy</h3>
+                        <p>This isn't just about saving the planet; it makes phenomenal business sense. Cloud providers are beginning to offer dynamic pricing based on data center load and energy availability. Companies that architect their software to be "time-flexible" and "location-flexible" (shifting compute across geographic zones where energy is currently cheap) will realize massive cost savings. It is the ultimate intersection of DevOps, AI, and sustainability.</p>
+                    </div>
+                `
+            },
+            {
+                id: 'digital-transformation-traditional-business',
+                date: 'Apr 18, 2026',
+                year: '2026',
+                title: 'Beyond IT: Why Traditional Businesses Must Internalize Tech Talent',
+                tags: ['Technology'],
+                readTime: '6 min',
+                excerpt: 'From law firms to HoReCa, every company is now a software company. Why relying on off-the-shelf software is no longer enough to build a competitive moat.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4 text-lightText dark:text-darkText">Beyond IT: Why Traditional Businesses Must Internalize Tech Talent</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>April 18, 2026</span>
+                        <span>•</span>
+                        <span>6 min read</span>
+                    </div>
+                    <div class="space-y-6 text-lg text-lightText/90 dark:text-darkText/90">
+                        <p>There used to be a clear line between "Tech Companies" and "Traditional Businesses." Today, that line has completely dissolved. Whether you are running a law firm, a medical clinic, an auto repair shop, a construction company, or a chain of hotels, your primary bottleneck to scaling is no longer physical space or raw materials—it is data flow, automation, and digital customer experience.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">The Trap of "Off-the-Shelf" SaaS</h3>
+                        <p>Historically, traditional businesses simply bought off-the-shelf software. The problem? If you use the exact same CRM and booking system as your competitor, you have no operational advantage. Your digital experience is commoditized. </p>
+                        
+                        <p>I strongly believe that forward-thinking companies need to stop viewing technology as an "IT Support" function (fixing printers and managing email accounts) and start viewing it as core R&D. Traditional businesses must begin hiring internal tech leaders—Engineering Managers, Product Owners, and Data Architects.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">Real-World Applications</h3>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Law Firms:</strong> Automating document discovery through internal, secure LLMs trained on past case law, saving thousands of billable hours.</li>
+                            <li><strong>Medical Clinics:</strong> Building proprietary patient portals that seamlessly integrate wearable health data with the clinic's unique treatment protocols.</li>
+                            <li><strong>HoReCa & Retail:</strong> Custom predictive inventory systems that analyze local weather, local events, and historical data to perfectly optimize supply chains.</li>
+                        </ul>
+                        <p>Digitalizing a business isn't a one-time project you outsource to an agency; it is a continuous evolution. Those who internalize this capability today will own their respective markets tomorrow.</p>
+                    </div>
+                `
+            },
+            {
+                id: 'maramures-roots-resilience',
+                date: 'Jan 10, 2026',
+                year: '2026',
+                title: 'Echoes of the Iza Valley: How Nature Shapes an Engineer\'s Mind',
+                tags: ['Maramureș'],
+                readTime: '5 min',
+                excerpt: 'Reflections on my childhood summers in Maramureș. How making hay and the community spirit of the mountains taught me the fundamentals of building enduring systems.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4 text-lightText dark:text-darkText">Echoes of the Iza Valley: How Nature Shapes an Engineer's Mind</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>January 10, 2026</span>
                         <span>•</span>
                         <span>5 min read</span>
                     </div>
-                    <p class="mb-6">It's a common trap in Agile transformations: measuring the output (velocity, story points) rather than the outcome. Over the years managing cross-functional teams, I've shifted my focus entirely.</p>
-                    <h3 class="text-xl font-medium mt-8 mb-4">DORA Metrics and Beyond</h3>
-                    <p class="mb-6">Deployment Frequency and Lead Time for Changes tell a much more accurate story about a team's health and the friction in their pipeline than how many points they burned down.</p>
+                    <div class="space-y-6 text-lg text-lightText/90 dark:text-darkText/90">
+                        <p>Before I understood algorithms, distributed networks, or cloud infrastructure, I understood the rhythm of the seasons. I was born and raised at the foot of the mountains, and the most defining chapters of my childhood were written during the long, sun-drenched summers in Maramureș, on the Iza Valley.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">The Architecture of Hard Work</h3>
+                        <p>My grandparents raised animals, and providing for them meant making hay. In Maramureș, making hay isn't just a chore; it is a meticulously choreographed community event known as "clacă". It requires timing (reading the weather), profound physical endurance, and absolute teamwork. You cannot automate the swinging of a scythe or the gathering of the harvest before a thunderstorm hits. You must rely on the people around you.</p>
+                        
+                        <p>Those days taught me that the strongest systems are not built by isolated individuals, but by aligned communities working towards a shared, vital goal. At the end of those exhausting days, we would gather around a wood fire to eat food cooked slowly in a cast-iron cauldron (<em>ceaun</em>). That shared meal was the ultimate retrospective—a time to rest, bond, and prepare for the next iteration.</p>
+                        
+                        <h3 class="text-2xl font-serif mt-8 mb-4 text-lightText dark:text-darkText">From the Forest to the Server Room</h3>
+                        <p>People often ask me how I maintain perspective in the hyper-fast, high-stress world of software engineering and AI. The truth is, my baseline for resilience was set in those mountains. Nature is the ultimate fault-tolerant system. It adapts, it recovers, and it endures.</p>
+                        <p>Când proiectez o organizație de inginerie sau o nouă platformă software, caut aceleași principii organice. Încerc să construiesc echipe care se sprijină reciproc la fel ca într-o "clacă". Încerc să construiesc software care, asemenea <a href="https://maramures.culturamm.ro/biserica-de-lemn-sf-nicolae-a-nistorestilor-din-salistea-de-sus/" target="_blank" class="text-blue-500 hover:underline">bisericilor de lemn din Maramureș</a> construite fără niciun cui de fier, este suficient de flexibil pentru a rezista elementelor schimbătoare ale peisajului tehnologic în timp.</p>
+                        
+                        <figure class="my-8">
+                            <img src="https://maramures.culturamm.ro/wp-content/uploads/2020/09/01-Saliste-de-Sus-Nistoresti-2011-foto-Ionel-Onofras-scaled.jpeg" alt="Biserica de lemn Săliștea de Sus" class="w-full rounded-xl object-cover shadow-sm opacity-90 hover:opacity-100 transition-opacity" />
+                        </figure>
+                    </div>
                 `
             }
         ];
@@ -482,7 +457,7 @@
         const navLinks = document.querySelectorAll('.nav-link');
 
         function handleRoute() {
-            let hash = window.location.hash || '#home';
+            let hash = window.location.hash || '#about';
             
             // Check if it's a specific article route
             if (hash.startsWith('#article-')) {
@@ -704,6 +679,61 @@
             setTimeout(typeWriter, 500);
         });
 
+        // --- 5. STEALTH GOOGLE TRANSLATE LOGIC ---
+        
+        // Funcția cerută de API-ul Google pentru inițializare
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false // Împiedică afișarea automată a bannerului
+            }, 'google_translate_element');
+        }
+
+        // Logica noastră de auto-traducere în fundal
+        function initAutoTranslate() {
+            // Obținem limba browserului (ex: 'ro-RO', 'fr', 'de')
+            let userLang = navigator.language || navigator.userLanguage;
+            
+            // Extragem doar primele două litere pentru codul de limbă de bază (ex: din 'ro-RO' obținem 'ro')
+            userLang = userLang.substr(0, 2).toLowerCase();
+
+            // Dacă limba utilizatorului este engleză ('en'), nu facem nimic (site-ul e deja în engleză)
+            if (userLang === 'en') {
+                return; 
+            }
+
+            // Verificăm periodic dacă widget-ul Google s-a încărcat complet în DOM
+            let checkInterval = setInterval(function() {
+                let gtCombo = document.querySelector('.goog-te-combo');
+                
+                if (gtCombo) {
+                    // Dacă widget-ul s-a încărcat
+                    clearInterval(checkInterval); // Oprim verificarea periodică
+
+                    // Setăm valoarea dropdown-ului la limba browserului
+                    gtCombo.value = userLang;
+                    
+                    // Declanșăm artificial evenimentul de 'change' pentru a forța Google să înceapă traducerea
+                    if (document.createEvent) {
+                        // Pentru browsere moderne
+                        let event = document.createEvent('HTMLEvents');
+                        event.initEvent('change', true, true);
+                        gtCombo.dispatchEvent(event);
+                    } else {
+                        // Pentru browsere mai vechi (ex: IE)
+                        gtCombo.fireEvent('onchange');
+                    }
+                }
+            }, 300); // Verificăm la fiecare 300 milisecunde
+        }
+
+        // Pornim logica noastră de auto-traducere imediat după ce scripturile de bază s-au încărcat
+        window.addEventListener('load', initAutoTranslate);
+
     </script>
+    
+    <!-- Includem scriptul oficial Google Translate -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
