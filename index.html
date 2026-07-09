@@ -119,6 +119,21 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* Library Tabs Transition */
+        .lib-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .lib-view.active {
+            display: block;
+        }
+        .lib-view.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* --- GOOGLE TRANSLATE STEALTH CSS --- */
         /* Ascunde widget-ul standard */
         #google_translate_element {
@@ -164,6 +179,7 @@
             <div class="flex items-center gap-6 font-sans text-sm font-light">
                 <a href="#about" class="nav-link hover-underline hidden sm:inline-block" data-target="about">About</a>
                 <a href="#insights" class="nav-link hover-underline" data-target="insights">Insights</a>
+                <a href="#library" class="nav-link hover-underline" data-target="library">Inspirations</a>
                 
                 <!-- Theme Toggle Button -->
                 <button id="theme-toggle" class="ml-2 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle Theme">
@@ -272,6 +288,113 @@
             <article id="article-content" class="prose prose-neutral dark:prose-invert max-w-none font-light leading-relaxed prose-headings:font-serif prose-a:text-blue-500 hover:prose-a:text-blue-600">
                 <!-- Article content injected here -->
             </article>
+        </section>
+
+        <!-- VIEW: LIBRARY (Inspirations) -->
+        <section id="view-library" class="view-section">
+            <h2 class="font-serif text-3xl mb-2">Things I Found Inspiring</h2>
+            <p class="text-accent mb-12 font-light border-b border-gray-200 dark:border-gray-800 pb-4">Books, articles, and talks that I truly enjoyed and took inspiration from.</p>
+
+            <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                
+                <!-- Left: Content Area -->
+                <div class="w-full md:w-3/4 space-y-2">
+                    
+                    <!-- Category: BOOKS -->
+                    <div id="lib-books" class="lib-view active fade-in">
+                        <div class="flex flex-col gap-8">
+                            <!-- Book 1 -->
+                            <div class="flex gap-4 md:gap-5 group items-start max-w-3xl">
+                                <div class="w-20 md:w-24 shrink-0 overflow-hidden rounded shadow-sm border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+                                    <img src="https://robertdkaplan.com/wp-content/uploads/2026/01/Robert-D-Kaplan-Asias-Cauldron.jpg" alt="Asia's Cauldron" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="flex flex-col pt-0.5">
+                                    <h4 class="font-medium text-base md:text-lg text-lightText dark:text-darkText leading-tight mb-1">Asia's Cauldron</h4>
+                                    <p class="text-xs font-mono text-accent mb-2">Robert D. Kaplan</p>
+                                    <p class="text-sm font-light text-lightText/80 dark:text-darkText/80 leading-relaxed">
+                                        A fascinating dive into the geopolitics of the South China Sea. Understanding macro-level system dynamics and geographic constraints in geopolitics often mirrors the complexity of architectural bottlenecks in distributed tech systems.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Book 2 -->
+                            <div class="flex gap-4 md:gap-5 group items-start max-w-3xl">
+                                <div class="w-20 md:w-24 shrink-0 overflow-hidden rounded shadow-sm border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+                                    <img src="https://www.worldofbooks.com/cdn/shop/files/1633693910.jpg?v=1751151517&width=493" alt="Authentic Leadership" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="flex flex-col pt-0.5">
+                                    <h4 class="font-medium text-base md:text-lg text-lightText dark:text-darkText leading-tight mb-1">Authentic Leadership</h4>
+                                    <p class="text-xs font-mono text-accent mb-2">Essential Reading</p>
+                                    <p class="text-sm font-light text-lightText/80 dark:text-darkText/80 leading-relaxed">
+                                        A powerful reminder that there is no single mold for a successful leader. It highlights how vastly different leaders can be and still succeed. The core message is that we shouldn't try to copy anyone else's style; instead, we must discover our own unique, authentic path to success.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Book 3 -->
+                            <div class="flex gap-4 md:gap-5 group items-start max-w-3xl">
+                                <div class="w-20 md:w-24 shrink-0 overflow-hidden rounded shadow-sm border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+                                    <img src="https://cdn4.libris.ro/img/pozeprod/32478/32477557-1.jpg" alt="The Art of War" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="flex flex-col pt-0.5">
+                                    <h4 class="font-medium text-base md:text-lg text-lightText dark:text-darkText leading-tight mb-1">The Art of War</h4>
+                                    <p class="text-xs font-mono text-accent mb-2">Sun Tzu</p>
+                                    <p class="text-sm font-light text-lightText/80 dark:text-darkText/80 leading-relaxed">
+                                        A timeless lesson that remains profoundly relevant today. In leadership and management, as in life, the greatest victory is that which requires no battle. The most effective way to win a dispute or overcome a challenge is to prevent it entirely or resolve it long before it escalates.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: ARTICLES & MEDIA -->
+                    <div id="lib-articles-media" class="lib-view">
+                        <div class="flex flex-col gap-8">
+                            <!-- Article 1 -->
+                            <div class="flex gap-4 md:gap-5 group items-start max-w-3xl">
+                                <a href="https://axial.substack.com/p/axial-business-models" target="_blank" class="w-16 md:w-20 h-16 md:h-20 shrink-0 flex items-center justify-center rounded shadow-sm border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 group-hover:border-gray-300 dark:group-hover:border-gray-600 transition-colors">
+                                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path></svg>
+                                </a>
+                                <div class="flex flex-col pt-0.5">
+                                    <a href="https://axial.substack.com/p/axial-business-models" target="_blank" class="w-fit">
+                                        <h4 class="font-medium text-base md:text-lg text-lightText dark:text-darkText leading-tight mb-1 group-hover:text-blue-500 transition-colors">Axial: Business Models</h4>
+                                    </a>
+                                    <p class="text-xs font-mono text-accent mb-2">Substack Article</p>
+                                    <p class="text-sm font-light text-lightText/80 dark:text-darkText/80 leading-relaxed">
+                                        A comprehensive breakdown of different business models and value capture mechanisms. It provides an excellent mental framework for understanding how modern companies structure themselves to build moats and scale effectively.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Media Placeholder -->
+                            <div class="flex gap-4 md:gap-5 group items-start max-w-3xl opacity-60">
+                                <div class="w-16 md:w-20 h-16 md:h-20 shrink-0 flex items-center justify-center rounded shadow-sm border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-gray-400 dark:text-gray-600">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <div class="flex flex-col pt-0.5">
+                                    <h4 class="font-medium text-base md:text-lg text-lightText dark:text-darkText leading-tight mb-1">More content coming soon</h4>
+                                    <p class="text-sm font-light text-lightText/80 dark:text-darkText/80 leading-relaxed">
+                                        Impactful talks, podcasts, and videos will be added here alongside the articles.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right: Filters Sidebar -->
+                <aside class="w-full md:w-1/4 md:sticky md:top-32 order-first md:order-last flex flex-row md:flex-col gap-8 md:gap-0 overflow-x-auto no-scrollbar pb-2 md:pb-0 border-b border-gray-100 dark:border-gray-800 md:border-0 mb-4 md:mb-0 z-10 bg-lightBg/90 dark:bg-darkBg/90 md:bg-transparent">
+                    <div class="shrink-0">
+                        <h3 class="font-serif text-lg mb-3 md:mb-4 text-lightText dark:text-darkText hidden md:block">Categories</h3>
+                        <div class="flex flex-row md:flex-col gap-4 md:gap-2 text-sm font-light">
+                            <button onclick="switchLibCategory('books')" id="btn-lib-books" class="lib-filter-btn shrink-0 text-left active text-lightText dark:text-darkText font-medium transition-colors hover:text-lightText dark:hover:text-darkText">Books</button>
+                            <button onclick="switchLibCategory('articles-media')" id="btn-lib-articles-media" class="lib-filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText">Articles & Media</button>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
         </section>
 
     </main>
@@ -584,6 +707,32 @@
                 container.innerHTML = article.content;
             } else {
                 container.innerHTML = `<h1 class="text-2xl">Article not found.</h1>`;
+            }
+        }
+
+        // --- 3.5 LIBRARY TABS LOGIC ---
+        function switchLibCategory(category) {
+            // Remove active state from all views and buttons
+            document.querySelectorAll('.lib-view').forEach(view => {
+                view.classList.remove('active', 'fade-in');
+            });
+            document.querySelectorAll('.lib-filter-btn').forEach(btn => {
+                btn.classList.add('text-accent');
+                btn.classList.remove('text-lightText', 'dark:text-darkText', 'font-medium');
+            });
+
+            // Activate the selected view
+            const targetView = document.getElementById(`lib-${category}`);
+            if(targetView) {
+                targetView.classList.add('active');
+                setTimeout(() => targetView.classList.add('fade-in'), 50); // delay pt css transition
+            }
+
+            // Highlight the selected button
+            const targetBtn = document.getElementById(`btn-lib-${category}`);
+            if(targetBtn) {
+                targetBtn.classList.remove('text-accent');
+                targetBtn.classList.add('text-lightText', 'dark:text-darkText', 'font-medium');
             }
         }
 
