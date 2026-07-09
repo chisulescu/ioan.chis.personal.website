@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ioan Chiș — Engineering & AI Leadership</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // We use class-based dark mode for the manual toggle
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Newsreader', 'serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        lightBg: '#fcfcfc',
+                        darkBg: '#121212',
+                        lightText: '#1a1a1a',
+                        darkText: '#ededed',
+                        accent: '#6b7280', // neutral accent
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base and selection */
+        ::selection { background-color: #e5e7eb; color: #000; }
+        .dark ::selection { background-color: #374151; color: #fff; }
+        
+        body {
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: currentColor;
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, opacity 0.2s;
+            opacity: 0.5;
+            mix-blend-mode: difference;
+        }
+        
+        @media (max-width: 768px) {
+            .cursor-dot { display: none; } /* Disable on mobile */
+        }
+
+        /* Link Hover Effects */
+        .hover-underline {
+            position: relative;
+            text-decoration: none;
+        }
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .hover-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* SPA View Transitions */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .view-section.active {
+            display: block;
+        }
+        .view-section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typing cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+
+<body class="bg-lightBg text-lightText dark:bg-darkBg dark:text-darkText transition-colors duration-500 min-h-screen flex flex-col">
+    
+    <div class="cursor-dot hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-lightBg/80 dark:bg-darkBg/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-500">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="font-serif text-lg md:text-xl tracking-tight font-medium hover:opacity-70 transition-opacity">
+                I.C.
+            </a>
+            <div class="flex items-center gap-6 font-sans text-sm font-light">
+                <a href="#home" class="nav-link hover-underline hidden sm:inline-block" data-target="home">Home</a>
+                <a href="#experience" class="nav-link hover-underline" data-target="experience">Experience</a>
+                <a href="#insights" class="nav-link hover-underline" data-target="insights">Insights</a>
+                
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="ml-2 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle Theme">
+                    <!-- Sun Icon -->
+                    <svg id="icon-sun" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <!-- Moon Icon -->
+                    <svg id="icon-moon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container (SPA Root) -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-6 pt-32 pb-20">
+        
+        <!-- VIEW: HOME -->
+        <section id="view-home" class="view-section active">
+            <header class="mb-16 reveal active">
+                <div class="font-mono text-xs md:text-sm text-accent mb-6 flex items-center gap-2">
+                    <span class="text-green-500">➜</span> 
+                    <span class="text-blue-500">~</span> 
+                    <span id="typing-text" class="typing-cursor"></span>
+                </div>
+                <h1 class="font-serif text-4xl md:text-5xl font-normal tracking-tight mb-4">
+                    Ioan Chiș
+                </h1>
+                <p class="font-sans text-accent text-lg md:text-xl font-light tracking-wide max-w-2xl">
+                    Engineering & Project Manager | Building Scalable, Impactful Systems | AI Enthusiast
+                </p>
+            </header>
+
+            <div class="font-sans font-light text-base md:text-lg leading-relaxed space-y-6 text-lightText/90 dark:text-darkText/90 max-w-3xl reveal active" style="transition-delay: 100ms;">
+                <p>
+                    I drive innovation through AI, software engineering, and strategic delivery, turning complex ideas into impactful, resilient systems. With extensive experience in cloud infrastructure, DevOps, and project management, I bridge the gap between strategic vision and technical execution.
+                </p>
+                <p>
+                    My background spans managing cross-functional teams for FinTech platforms, orchestrating cloud operations, and maintaining an academic foundation teaching Intelligent Systems at the Technical University of Cluj-Napoca.
+                </p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 reveal active" style="transition-delay: 200ms;">
+                <div class="border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
+                    <h3 class="font-medium text-lg mb-2">Technical Leadership</h3>
+                    <p class="text-sm text-accent font-light">Leading the Acceleration Roadmap Lab at GlobalLogic, focusing on strategic tech initiatives and R&D.</p>
+                    <a href="#experience" class="inline-block mt-4 text-sm font-medium hover-underline">View Experience ↗</a>
+                </div>
+                <div class="border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
+                    <h3 class="font-medium text-lg mb-2">Insights & Writing</h3>
+                    <p class="text-sm text-accent font-light">Thoughts on software architecture, DevOps culture, and managing engineering teams.</p>
+                    <a href="#insights" class="inline-block mt-4 text-sm font-medium hover-underline">Read Articles ↗</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: EXPERIENCE -->
+        <section id="view-experience" class="view-section">
+            <h2 class="font-serif text-3xl mb-12 border-b border-gray-200 dark:border-gray-800 pb-4">Experience & Education</h2>
+            
+            <div class="space-y-10 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 dark:before:via-gray-800 before:to-transparent">
+                
+                <!-- Role 1 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active reveal">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-black dark:bg-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-black/20 backdrop-blur-sm">
+                        <div class="flex flex-col mb-3">
+                            <span class="font-mono text-xs text-accent">Aug 2025 — Present</span>
+                            <h3 class="font-medium text-lg">Engineering Manager</h3>
+                            <span class="text-sm text-accent">GlobalLogic • Remote</span>
+                        </div>
+                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
+                            <li>Focus on driving business results, stakeholder management, and project outcomes.</li>
+                            <li>Resource planning, staffing, budget controlling, and risk management.</li>
+                            <li>Ensure high-quality code standards and guide developers on optimizing legacy systems.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Role 2 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
+                        <div class="flex flex-col mb-3">
+                            <span class="font-mono text-xs text-accent">Jan 2023 — Jul 2025</span>
+                            <h3 class="font-medium text-lg">Technical Project Manager</h3>
+                            <span class="text-sm text-accent">Insurance Supermarket International Canada</span>
+                        </div>
+                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
+                            <li>Coordinated DevOps & cloud infra projects using Terraform and automated deployment pipelines.</li>
+                            <li>Migrated monitoring to Datadog and CI/CD workflows to GitHub Actions.</li>
+                            <li>Managed day-to-day cloud operations (EC2, S3, Lambda, VPCs) and supported SOC/SOC2 implementation.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Role 3 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
+                        <div class="flex flex-col mb-3">
+                            <span class="font-mono text-xs text-accent">Feb 2020 — Feb 2025</span>
+                            <h3 class="font-medium text-lg">University Assistant</h3>
+                            <span class="text-sm text-accent">Universitatea Tehnică din Cluj-Napoca</span>
+                        </div>
+                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
+                            <li>Taught Intelligent Systems lab courses (Machine Learning, Bayesian Networks, Big Data).</li>
+                            <li>Mentored students on AI-driven software development projects and end-to-end ML workflows.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Role 4 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
+                        <div class="flex flex-col mb-3">
+                            <span class="font-mono text-xs text-accent">Aug 2020 — Dec 2022</span>
+                            <h3 class="font-medium text-lg">Senior Technical PM</h3>
+                            <span class="text-sm text-accent">Prodigy IT Solutions (QuantoPay)</span>
+                        </div>
+                        <ul class="text-sm font-light leading-relaxed list-disc pl-4 space-y-1 text-lightText/80 dark:text-darkText/80">
+                            <li>Led development of the QuantoPay FinTech platform, coordinating a cross-functional team of 20+ engineers.</li>
+                            <li>Managed PCI-DSS compliance, client portal development, and agile project execution.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Role 5 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
+                        <div class="flex flex-col mb-2">
+                            <span class="font-mono text-xs text-accent">Sep 2019 — May 2020</span>
+                            <h3 class="font-medium text-lg">Project Manager & BA</h3>
+                            <span class="text-sm text-accent">AirportLabs</span>
+                        </div>
+                        <p class="text-sm font-light leading-relaxed text-lightText/80 dark:text-darkText/80">
+                            Managed software/hardware projects and delivered critical airport applications including FIDS and real-time aircraft visualization tools.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Role 6 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-gray-300 dark:bg-gray-700 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent hover:border-gray-100 dark:hover:border-gray-800 transition-colors">
+                        <div class="flex flex-col mb-2">
+                            <span class="font-mono text-xs text-accent">Jul 2018 — Nov 2019</span>
+                            <h3 class="font-medium text-lg">Full Stack Engineer</h3>
+                            <span class="text-sm text-accent">GEBS / thullex</span>
+                        </div>
+                        <p class="text-sm font-light leading-relaxed text-lightText/80 dark:text-darkText/80">
+                            Developed microservices with Spring Boot, built user interfaces with ReactJS/Redux, and applied machine learning for image processing.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Education -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal mt-4">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-lightBg dark:border-darkBg bg-accent/30 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10"></div>
+                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-transparent">
+                        <div class="flex flex-col mb-1">
+                            <span class="font-mono text-xs text-accent">2015 — 2019</span>
+                            <h3 class="font-medium text-lg">BSc, Computer Science</h3>
+                            <span class="text-sm text-accent">Universitatea Tehnică din Cluj-Napoca</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VIEW: INSIGHTS LIST -->
+        <section id="view-insights" class="view-section">
+            <h2 class="font-serif text-3xl mb-2">Insights & Notes</h2>
+            <p class="text-accent mb-12 font-light border-b border-gray-200 dark:border-gray-800 pb-4">Reflections on technology, science, life, and roots.</p>
+            
+            <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                
+                <!-- Left: Article List -->
+                <div id="insights-list-container" class="w-full md:w-3/4 space-y-2">
+                    <!-- Articles will be injected here via JS -->
+                </div>
+                
+                <!-- Right: Filters Sidebar -->
+                <aside class="w-full md:w-1/4 md:sticky md:top-32 order-first md:order-last flex flex-row md:flex-col gap-8 md:gap-0 overflow-x-auto no-scrollbar pb-2 md:pb-0 border-b border-gray-100 dark:border-gray-800 md:border-0 mb-4 md:mb-0 z-10 bg-lightBg/90 dark:bg-darkBg/90 md:bg-transparent">
+                    <div class="shrink-0">
+                        <h3 class="font-serif text-lg mb-3 md:mb-4 text-lightText dark:text-darkText hidden md:block">Topics</h3>
+                        <div class="flex flex-row md:flex-col gap-4 md:gap-2 text-sm font-light">
+                            <button onclick="setFilter('all', 'all')" class="filter-btn shrink-0 text-left active text-lightText dark:text-darkText font-medium transition-colors hover:text-lightText dark:hover:text-darkText" data-type="all" data-value="all">All Notes</button>
+                            <button onclick="setFilter('tag', 'Technology')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Technology">Technology</button>
+                            <button onclick="setFilter('tag', 'Science')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Science">Science</button>
+                            <button onclick="setFilter('tag', 'Life')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Life">Life & Work</button>
+                            <button onclick="setFilter('tag', 'Maramureș')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="tag" data-value="Maramureș">Maramureș</button>
+                        </div>
+                    </div>
+                    
+                    <div class="md:mt-10 shrink-0">
+                        <h3 class="font-serif text-lg mb-3 md:mb-4 text-lightText dark:text-darkText hidden md:block">Years</h3>
+                        <div class="flex flex-row md:flex-col gap-4 md:gap-2 text-sm font-light">
+                            <button onclick="setFilter('year', '2026')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="year" data-value="2026">2026</button>
+                            <button onclick="setFilter('year', '2025')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="year" data-value="2025">2025</button>
+                            <button onclick="setFilter('year', '2024')" class="filter-btn shrink-0 text-left text-accent transition-colors hover:text-lightText dark:hover:text-darkText" data-type="year" data-value="2024">2024</button>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </section>
+
+        <!-- VIEW: SINGLE ARTICLE -->
+        <section id="view-article" class="view-section">
+            <button onclick="window.history.back()" class="mb-8 font-sans text-sm text-accent hover:text-lightText dark:hover:text-darkText transition-colors flex items-center gap-2 group">
+                <span class="transform transition-transform group-hover:-translate-x-1">←</span> Back to insights
+            </button>
+            <article id="article-content" class="prose prose-neutral dark:prose-invert max-w-none font-light leading-relaxed prose-headings:font-serif prose-a:text-blue-500 hover:prose-a:text-blue-600">
+                <!-- Article content injected here -->
+            </article>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-gray-200 dark:border-gray-800 py-8 text-center text-sm font-light text-accent">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; <span id="year"></span> Ioan Chiș. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="https://www.linkedin.com/in/ioan-chis" target="_blank" class="hover-underline">LinkedIn</a>
+                <a href="mailto:chisulescu@gmail.com" class="hover-underline">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. MOCK BLOG DATA ---
+        const articles = [
+            {
+                id: 'ai-adoption-enterprise',
+                date: 'Oct 12, 2026',
+                year: '2026',
+                title: 'Pragmatic AI Adoption in Enterprise Ecosystems',
+                tags: ['Technology', 'AI / ML'],
+                readTime: '6 min',
+                excerpt: 'Moving beyond the hype: How engineering teams can integrate AI models into legacy SaaS platforms without breaking the architecture.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Pragmatic AI Adoption in Enterprise Ecosystems</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>October 12, 2026</span>
+                        <span>•</span>
+                        <span>6 min read</span>
+                    </div>
+                    <p class="mb-6">The transition from AI as an academic exercise to a core component of enterprise SaaS is fraught with architectural challenges. When leading teams through this modernization phase, the primary goal is rarely the model itself, but rather the pipeline.</p>
+                    <h3 class="text-xl font-medium mt-8 mb-4">The Integration Problem</h3>
+                    <p class="mb-6">Legacy systems weren't built for non-deterministic outputs. Integrating LLMs or predictive models requires robust fallback mechanisms, strict latency budgets, and rigorous API contracts.</p>
+                    <blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-6 text-accent">
+                        "The model is 5% of the work. The surrounding MLOps, telemetry, and fallback routing is the other 95%."
+                    </blockquote>
+                    <p class="mb-6">We've found that utilizing sidecar patterns for AI integrations allows us to scale the inference compute independently from the main application monolith, a crucial step in our modernization roadmap.</p>
+                `
+            },
+            {
+                id: 'maramures-roots',
+                date: 'Jul 04, 2026',
+                year: '2026',
+                title: 'Lessons on Resilience from the Wooden Churches of Maramureș',
+                tags: ['Maramureș', 'Life'],
+                readTime: '5 min',
+                excerpt: 'What ancient timber architecture can teach us about building systems that withstand the test of time, both in software and in life.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Lessons on Resilience from the Wooden Churches of Maramureș</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>July 4, 2026</span>
+                        <span>•</span>
+                        <span>5 min read</span>
+                    </div>
+                    <p class="mb-6">Growing up connected to Maramureș, you internalize a deep respect for longevity. The wooden churches here, some standing for centuries without a single iron nail, are masterclasses in decoupled architecture and resilience.</p>
+                    <p class="mb-6">In software, we talk endlessly about fault tolerance. But look at traditional woodwork: the joints are designed to move, breathe, and adapt to thermal expansion. They don't fight the environment; they are engineered to flex with it.</p>
+                `
+            },
+            {
+                id: 'fintech-devops',
+                date: 'Apr 22, 2025',
+                year: '2025',
+                title: 'Building Resilient FinTech Infrastructure',
+                tags: ['Technology', 'DevOps'],
+                readTime: '8 min',
+                excerpt: 'Lessons learned from scaling platforms. Exploring infrastructure as code, zero-trust security, and CI/CD pipelines.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Building Resilient FinTech Infrastructure</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>April 22, 2025</span>
+                        <span>•</span>
+                        <span>8 min read</span>
+                    </div>
+                    <p class="mb-6">In FinTech, downtime isn't just an inconvenience; it's a breach of trust and potentially a regulatory incident. The emphasis must be heavily placed on "shift-left" security and immutable infrastructure.</p>
+                    <h3 class="text-xl font-medium mt-8 mb-4">Infrastructure as Code (IaC)</h3>
+                    <p class="mb-6">Treating our infrastructure setup as code allowed us to spin up isolated staging environments that perfectly mirrored production. This eliminated the classic "it works on my machine" syndrome.</p>
+                `
+            },
+            {
+                id: 'complexity-science',
+                date: 'Nov 10, 2024',
+                year: '2024',
+                title: 'The Illusion of Control in Complex Systems',
+                tags: ['Science', 'Technology'],
+                readTime: '7 min',
+                excerpt: 'Applying chaos theory and system dynamics to modern microservices architectures and team topologies.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4">The Illusion of Control in Complex Systems</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>November 10, 2024</span>
+                        <span>•</span>
+                        <span>7 min read</span>
+                    </div>
+                    <p class="mb-6">As systems grow, they transition from complicated (like a watch) to complex (like an ecosystem). In complex systems, predictability drops exponentially as interdependencies grow.</p>
+                `
+            },
+            {
+                id: 'agile-engineering-managers',
+                date: 'Jan 15, 2024',
+                year: '2024',
+                title: 'Metrics That Actually Matter for Engineering Teams',
+                tags: ['Life', 'Management'],
+                readTime: '5 min',
+                excerpt: 'Why velocity is a flawed metric and what Engineering Managers should measure instead to ensure healthy, productive teams.',
+                content: `
+                    <h1 class="font-serif text-3xl md:text-4xl mb-4">Metrics That Actually Matter for Engineering Teams</h1>
+                    <div class="flex items-center gap-4 text-sm font-mono text-accent mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+                        <span>January 15, 2024</span>
+                        <span>•</span>
+                        <span>5 min read</span>
+                    </div>
+                    <p class="mb-6">It's a common trap in Agile transformations: measuring the output (velocity, story points) rather than the outcome. Over the years managing cross-functional teams, I've shifted my focus entirely.</p>
+                    <h3 class="text-xl font-medium mt-8 mb-4">DORA Metrics and Beyond</h3>
+                    <p class="mb-6">Deployment Frequency and Lead Time for Changes tell a much more accurate story about a team's health and the friction in their pipeline than how many points they burned down.</p>
+                `
+            }
+        ];
+
+        // --- 2. SPA ROUTING LOGIC ---
+        const views = document.querySelectorAll('.view-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function handleRoute() {
+            let hash = window.location.hash || '#home';
+            
+            // Check if it's a specific article route
+            if (hash.startsWith('#article-')) {
+                const articleId = hash.replace('#article-', '');
+                renderArticle(articleId);
+                switchView('view-article');
+                return;
+            }
+
+            // Normal routes
+            const targetId = `view-${hash.substring(1)}`;
+            switchView(targetId);
+            updateNav(hash);
+            
+            // Trigger scroll reveal for new view
+            setTimeout(handleScrollReveal, 100);
+        }
+
+        function switchView(targetId) {
+            views.forEach(view => {
+                if (view.id === targetId) {
+                    view.classList.add('active');
+                    // Small delay to trigger CSS transition
+                    setTimeout(() => view.classList.add('fade-in'), 50);
+                } else {
+                    view.classList.remove('fade-in');
+                    setTimeout(() => view.classList.remove('active'), 400); // Wait for fade out
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateNav(hash) {
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === hash) {
+                    link.style.fontWeight = '500';
+                    link.classList.add('text-lightText', 'dark:text-darkText');
+                    link.classList.remove('text-accent');
+                } else {
+                    link.style.fontWeight = '300';
+                    link.classList.add('text-accent');
+                    link.classList.remove('text-lightText', 'dark:text-darkText');
+                }
+            });
+        }
+
+        // --- 3. BLOG RENDERING & FILTERING ---
+        let currentFilter = { type: 'all', value: 'all' };
+
+        function setFilter(type, value) {
+            currentFilter = { type, value };
+            
+            // Update Active State on Buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const isActive = (type === 'all' && btn.dataset.type === 'all') || 
+                                 (btn.dataset.type === type && btn.dataset.value === value);
+                
+                if (isActive) {
+                    btn.classList.remove('text-accent');
+                    btn.classList.add('text-lightText', 'dark:text-darkText', 'font-medium');
+                } else {
+                    btn.classList.add('text-accent');
+                    btn.classList.remove('text-lightText', 'dark:text-darkText', 'font-medium');
+                }
+            });
+
+            // Re-render list
+            renderInsightsList();
+            
+            // Re-trigger scroll animations for new items
+            setTimeout(handleScrollReveal, 50);
+        }
+
+        function renderInsightsList() {
+            const container = document.getElementById('insights-list-container');
+            
+            // Filter articles based on state
+            const filteredArticles = articles.filter(article => {
+                if (currentFilter.type === 'all') return true;
+                if (currentFilter.type === 'year') return article.year === currentFilter.value;
+                if (currentFilter.type === 'tag') return article.tags.includes(currentFilter.value);
+                return true;
+            });
+
+            // Handle empty state
+            if (filteredArticles.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center text-accent font-light border border-dashed border-gray-200 dark:border-gray-800 rounded-xl">
+                        No notes found for "${currentFilter.value}". <br> 
+                        <button onclick="setFilter('all', 'all')" class="mt-4 hover-underline text-sm font-medium text-lightText dark:text-darkText">Clear filters</button>
+                    </div>`;
+                return;
+            }
+
+            // Render filtered articles
+            container.innerHTML = filteredArticles.map((article, index) => `
+                <a href="#article-${article.id}" class="group reveal flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 py-6 border-b border-gray-100 dark:border-gray-800/50 hover:bg-gray-50/50 dark:hover:bg-white/[0.02] transition-all px-4 -mx-4 rounded-xl" style="transition-delay: ${index * 50}ms;">
+                    <div class="md:w-28 shrink-0 font-mono text-xs text-accent/70 pt-1 md:pt-0">
+                        ${article.date}
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-serif text-xl md:text-2xl mb-2 text-lightText dark:text-darkText group-hover:text-gray-500 dark:group-hover:text-gray-300 transition-colors">
+                            ${article.title}
+                        </h3>
+                        <p class="font-sans font-light text-sm md:text-base text-accent line-clamp-2 mb-3">
+                            ${article.excerpt}
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            ${article.tags.map(tag => `<span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border border-gray-200 dark:border-gray-800 text-accent/80">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="shrink-0 font-mono text-xs text-accent/70 flex items-center gap-2 mt-4 md:mt-0 md:opacity-0 md:-translate-x-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all duration-300">
+                        ${article.readTime} 
+                        <span class="text-lg leading-none">&rarr;</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function renderArticle(id) {
+            const article = articles.find(a => a.id === id);
+            const container = document.getElementById('article-content');
+            if (article) {
+                container.innerHTML = article.content;
+            } else {
+                container.innerHTML = `<h1 class="text-2xl">Article not found.</h1>`;
+            }
+        }
+
+        // --- 4. INTERACTIONS & EFFECTS ---
+        
+        // Typing Effect
+        const initText = "init system_profile --user=ichis";
+        const typingEl = document.getElementById('typing-text');
+        let typeIdx = 0;
+        
+        function typeWriter() {
+            if (typeIdx < initText.length) {
+                typingEl.innerHTML += initText.charAt(typeIdx);
+                typeIdx++;
+                setTimeout(typeWriter, 50 + Math.random() * 50);
+            }
+        }
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        window.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        // Hover effect for cursor
+        document.addEventListener('mouseover', (e) => {
+            if(e.target.tagName.toLowerCase() === 'a' || e.target.tagName.toLowerCase() === 'button' || e.target.closest('a')) {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
+                cursorDot.style.backgroundColor = 'transparent';
+                cursorDot.style.border = '1px solid currentColor';
+            } else {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorDot.style.backgroundColor = 'currentColor';
+                cursorDot.style.border = 'none';
+            }
+        });
+
+        // Scroll Reveal
+        function handleScrollReveal() {
+            const reveals = document.querySelectorAll('.view-section.active .reveal');
+            const windowHeight = window.innerHeight;
+            
+            reveals.forEach(reveal => {
+                const revealTop = reveal.getBoundingClientRect().top;
+                const revealPoint = 50;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', handleScrollReveal);
+
+        // Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // Setup Footer Year
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Setup Theme
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                setTheme(true);
+            } else {
+                setTheme(false);
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                setTheme(!isDark);
+            });
+
+            // Init SPA
+            renderInsightsList();
+            handleRoute();
+            window.addEventListener('hashchange', handleRoute);
+            
+            // Start Typing effect after a short delay
+            setTimeout(typeWriter, 500);
+        });
+
+    </script>
+</body>
+</html>
