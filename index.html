@@ -589,7 +589,7 @@
             },
             {
                 id: 'maramures-roots-resilience',
-                date: 'April 2026',
+                date: 'July 2026',
                 year: '2026',
                 title: 'Echoes of the Iza Valley: How Nature Shapes an Engineer\'s Mind',
                 tags: ['Maramureș'],
@@ -620,6 +620,9 @@
                 `
             }
         ];
+
+        // Sortăm articolele cronologic descrescător (cele mai noi primele)
+        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         // --- 2. SPA ROUTING LOGIC ---
         const views = document.querySelectorAll('.view-section');
